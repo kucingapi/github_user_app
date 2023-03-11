@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.githubuser.UsersRecyclerView.UsersAdapter
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.databinding.ActivityMainBinding
@@ -18,12 +21,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var searchView: SearchView
+    private lateinit var recyclerView: RecyclerView
+    private val dataSet = arrayListOf<String>("Tesssstt", "Testt")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getUsers("")
+        setupRecyclerView()
+//        getUsers("")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -31,6 +37,15 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.option_menu, menu)
         setupSearchView(menu)
         return true
+    }
+
+    private fun setupRecyclerView(){
+        recyclerView = binding.listUserRecyclerView
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val listHeroAdapter = UsersAdapter(dataSet)
+        recyclerView.adapter = listHeroAdapter
     }
 
     private fun setupSearchView(menu: Menu){
@@ -75,5 +90,4 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
 }

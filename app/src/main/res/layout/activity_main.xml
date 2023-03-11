@@ -7,7 +7,8 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:id="@+id/listUserRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
