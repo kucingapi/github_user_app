@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = "Search..."
-        searchView.setOnQueryTextListener(searchViewQueryListener())
+        searchView.setOnQueryTextListener(SearchViewQueryListener())
     }
 
-    inner class searchViewQueryListener: SearchView.OnQueryTextListener{
+    inner class SearchViewQueryListener: SearchView.OnQueryTextListener{
         override fun onQueryTextSubmit(query: String): Boolean {
-            handelQuerySubmission(query)
+            handleQuerySubmission(query)
             return true
         }
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handelQuerySubmission(query: String){
+    private fun handleQuerySubmission(query: String){
         Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
         searchView.clearFocus()
     }
