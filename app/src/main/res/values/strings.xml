@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Github User</string>
     <string name="search">Search</string>
+    <string name="empty_string">kucingapi</string>
+    <string name="username">username</string>
+    <string name="profile_picture">Profile Picture</string>
 </resources>

@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import com.example.githubuser.api.ApiConfig
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.databinding.ActivityMainBinding
@@ -61,14 +59,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUsers(username: String){
-        val query = if(username.isEmpty()) "kucingapi" else username
+        val query = if(username.isEmpty()) getString(R.string.empty_string) else username
         val client = apiService.getListUsers(query)
 
         client.enqueue(object : Callback<ResponseUsers> {
             override fun onResponse(call: Call<ResponseUsers>, response: Response<ResponseUsers>) {
                 if (response.isSuccessful) {
                     val listUser = response.body()?.users as List<*>
-                    Log.d("response", "onResponse: ${listUser}")
+                    Log.d("response", "onResponse: $listUser")
                 }
             }
 
@@ -76,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("response", "failed")
             }
         })
-
     }
 
 }
