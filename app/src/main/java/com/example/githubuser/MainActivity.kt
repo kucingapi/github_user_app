@@ -4,10 +4,17 @@ import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import com.example.githubuser.api.ApiConfig
+import com.example.githubuser.api.ApiConfig.apiService
+import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.databinding.ActivityMainBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getUsers("")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,8 +56,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleQuerySubmission(query: String){
-        Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+        getUsers(query)
         searchView.clearFocus()
+    }
+
+    private fun getUsers(username: String){
+        val query = if(username.isEmpty()) "kucingapi" else username
+        val client = apiService.getListUsers(query)
+
+        client.enqueue(object : Callback<ResponseUsers> {
+            override fun onResponse(call: Call<ResponseUsers>, response: Response<ResponseUsers>) {
+                if (response.isSuccessful) {
+                    val listUser = response.body()?.users as List<*>
+                    Log.d("response", "onResponse: ${listUser}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
+                Log.d("response", "failed")
+            }
+        })
+
     }
 
 }

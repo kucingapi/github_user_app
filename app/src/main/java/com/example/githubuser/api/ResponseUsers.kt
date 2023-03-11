@@ -2,7 +2,7 @@ package com.example.githubuser.api
 
 import com.google.gson.annotations.SerializedName
 
-data class UsersResponse(
+data class ResponseUsers(
 
 	@field:SerializedName("total_count")
 	val totalCount: Int? = null,
