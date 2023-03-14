@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.usersRecyclerView.UsersAdapter
@@ -18,7 +19,7 @@ class UserListFragment : Fragment() {
     private lateinit var binding: FragmentUserListBinding
     private lateinit var recyclerView: RecyclerView
     private val dataSet = arrayListOf<User>()
-    private lateinit var usersViewModel: UsersViewModel
+    private val usersViewModel: UsersViewModel by viewModels()
     private lateinit var listUserAdapter: UsersAdapter
     private lateinit var searchView: SearchView
 
@@ -74,9 +75,11 @@ class UserListFragment : Fragment() {
     }
 
     private fun setUserObserver(){
-        usersViewModel = ViewModelProvider(this)[UsersViewModel::class.java]
         usersViewModel._listUser.observe(viewLifecycleOwner) {
             listUserAdapter.submitList(it)
+        }
+        usersViewModel.loading.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
         }
         usersViewModel.getUsers("")
     }
