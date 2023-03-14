@@ -1,10 +1,12 @@
 package com.example.githubuser
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,15 +21,49 @@ class UserListFragment : Fragment() {
     private val dataSet = arrayListOf<User>()
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var listUserAdapter: UsersAdapter
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserListBinding.inflate(inflater, container, false)
+        setToolBar()
         setupRecyclerView()
         setUserObserver()
+//        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    fun setToolBar(){
+        val searchToolbar = binding.searchToolbar
+        searchToolbar.inflateMenu(R.menu.option_menu)
+        setupSearchView(searchToolbar.menu)
+    }
+
+    private fun setupSearchView(menu: Menu){
+        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.search).actionView as SearchView
+        Log.d("setUpSearchView", "created")
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        searchView.queryHint = "Search..."
+        searchView.setOnQueryTextListener(SearchViewQueryListener())
+    }
+
+    inner class SearchViewQueryListener: SearchView.OnQueryTextListener{
+        override fun onQueryTextSubmit(query: String): Boolean {
+            handleQuerySubmission(query)
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String): Boolean {
+            return false
+        }
+    }
+
+    private fun handleQuerySubmission(query: String){
+        Log.d("PostQuery", query)
     }
 
     private fun setupRecyclerView(){
@@ -39,7 +75,7 @@ class UserListFragment : Fragment() {
         recyclerView.adapter = listUserAdapter
     }
 
-    fun setUserObserver(): Unit {
+    private fun setUserObserver(): Unit {
         usersViewModel = ViewModelProvider(this)[UsersViewModel::class.java]
         usersViewModel._listUser.observe(viewLifecycleOwner) {
             listUserAdapter.submitList(it)
