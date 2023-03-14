@@ -2,9 +2,12 @@ package com.example.githubuser.usersRecyclerView
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.githubuser.UserListFragmentDirections
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.ItemRowUserBinding
 
@@ -13,13 +16,21 @@ class UsersAdapter(private val dataSet: ArrayList<User>) :
     class ViewHolder(private val binding: ItemRowUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(text: String, url: String) {
+        fun bind(username: String, url: String) {
             with(binding) {
-                usernameTextView.text = text
+                usernameTextView.text = username
                 Glide.with(itemView.context)
                     .load(url)
                     .into(profilePictureImageView)
+                userCard.setOnClickListener {
+                    navigateDetailUser(username, it)
+                }
             }
+        }
+        private fun navigateDetailUser(username: String, view: View){
+            val toDetailUserFragment = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment()
+            toDetailUserFragment.username = username
+            view.findNavController().navigate(toDetailUserFragment)
         }
     }
 
