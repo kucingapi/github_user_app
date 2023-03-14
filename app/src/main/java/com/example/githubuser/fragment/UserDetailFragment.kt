@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

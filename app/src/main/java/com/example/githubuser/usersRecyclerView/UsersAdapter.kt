@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubuser.UserListFragmentDirections
+import com.example.githubuser.fragment.UserListFragmentDirections
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.ItemRowUserBinding
 

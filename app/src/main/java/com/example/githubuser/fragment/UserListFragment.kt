@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.fragment
 
 import android.app.SearchManager
 import android.content.Context
@@ -10,6 +10,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.githubuser.R
+import com.example.githubuser.viewmodel.UsersViewModel
 import com.example.githubuser.usersRecyclerView.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
