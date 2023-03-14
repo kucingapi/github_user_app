@@ -1,4 +1,4 @@
-package com.example.githubuser.recycleView
+package com.example.githubuser.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

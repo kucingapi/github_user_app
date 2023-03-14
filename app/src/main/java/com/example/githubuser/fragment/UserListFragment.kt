@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.R
 import com.example.githubuser.viewmodel.UsersViewModel
-import com.example.githubuser.recycleView.UsersAdapter
+import com.example.githubuser.adapter.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
 
