@@ -15,11 +15,7 @@ class UsersViewModel: ViewModel() {
     private val listUser = MutableLiveData<List<User>>()
     val _listUser: LiveData<List<User>> = listUser
     val loading: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-
-    init {
-        loading.value = false
+        MutableLiveData<Boolean>(false)
     }
 
     fun getUsers(username: String){
@@ -41,22 +37,3 @@ class UsersViewModel: ViewModel() {
         })
     }
 }
-
-//class UsersViewModelFactory() : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return super.create(modelClass)
-//    }
-//    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-//        return super.create(modelClass, extras)
-//    }
-//}
-
-//class AuthViewModelFactory : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-//        when {
-//            modelClass.isAssignableFrom(UsersViewModel::class.java)->{
-//                UsersViewModel() as T
-//            }
-//            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
-//        }
-//}

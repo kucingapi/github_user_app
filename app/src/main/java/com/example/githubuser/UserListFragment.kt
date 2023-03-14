@@ -31,8 +31,17 @@ class UserListFragment : Fragment() {
         setToolBar()
         setupRecyclerView()
         setUserObserver()
-//        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toDetailUserFragment = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment()
+        toDetailUserFragment.username = "kucingapi"
+//        binding.button.setOnClickListener {
+//            Log.d("button", "onViewCreated: clicked")
+//            it.findNavController().navigate(toDetailUserFragment)
+//        }
     }
 
     private fun setToolBar(){
@@ -83,5 +92,4 @@ class UserListFragment : Fragment() {
         }
         usersViewModel.getUsers("")
     }
-
 }
