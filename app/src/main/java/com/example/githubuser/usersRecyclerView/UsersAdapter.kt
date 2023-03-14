@@ -1,10 +1,10 @@
-package com.example.githubuser.UsersRecyclerView
+package com.example.githubuser.usersRecyclerView
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.api.ResponseUsers
+import com.bumptech.glide.Glide
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.ItemRowUserBinding
 
@@ -13,13 +13,19 @@ class UsersAdapter(private val dataSet: ArrayList<User>) :
     class ViewHolder(private val binding: ItemRowUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(text: String) {
-            binding.usernameTextView.text = text
+        fun bind(text: String, url: String) {
+            with(binding) {
+                usernameTextView.text = text
+                Glide.with(itemView.context)
+                    .load(url)
+                    .into(profilePictureImageView)
+            }
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitList(newDataSet: List<User>){
+        dataSet.clear()
         dataSet.addAll(newDataSet)
         this.notifyDataSetChanged()
     }
@@ -31,7 +37,8 @@ class UsersAdapter(private val dataSet: ArrayList<User>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(dataSet[position].login ?: "failed")
+        val currentData = dataSet[position]
+        viewHolder.bind(currentData.login ?: "failed", currentData.avatarUrl ?: "failed")
     }
 
     override fun getItemCount(): Int {

@@ -3,14 +3,13 @@ package com.example.githubuser
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.UsersRecyclerView.UsersAdapter
+import com.example.githubuser.usersRecyclerView.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
 
@@ -35,7 +34,7 @@ class UserListFragment : Fragment() {
         return binding.root
     }
 
-    fun setToolBar(){
+    private fun setToolBar(){
         val searchToolbar = binding.searchToolbar
         searchToolbar.inflateMenu(R.menu.option_menu)
         setupSearchView(searchToolbar.menu)
@@ -44,7 +43,6 @@ class UserListFragment : Fragment() {
     private fun setupSearchView(menu: Menu){
         val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.search).actionView as SearchView
-        Log.d("setUpSearchView", "created")
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.queryHint = "Search..."
@@ -63,7 +61,7 @@ class UserListFragment : Fragment() {
     }
 
     private fun handleQuerySubmission(query: String){
-        Log.d("PostQuery", query)
+        usersViewModel.getUsers(query)
     }
 
     private fun setupRecyclerView(){
@@ -75,7 +73,7 @@ class UserListFragment : Fragment() {
         recyclerView.adapter = listUserAdapter
     }
 
-    private fun setUserObserver(): Unit {
+    private fun setUserObserver(){
         usersViewModel = ViewModelProvider(this)[UsersViewModel::class.java]
         usersViewModel._listUser.observe(viewLifecycleOwner) {
             listUserAdapter.submitList(it)
