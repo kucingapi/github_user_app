@@ -9,22 +9,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowersViewModel: ViewModel() {
-    val userFollowers: MutableLiveData<List<User>> by lazy {
+class FollowingViewModel: ViewModel() {
+    val userFollowing: MutableLiveData<List<User>> by lazy {
         MutableLiveData<List<User>>()
     }
     val loading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
     }
 
-    fun getFollowers(username: String){
+    fun getFollowing(username: String){
         val query = username.ifEmpty { "kucingapi" }
-        val client = apiService.getFollowers(query)
+        val client = apiService.getFollowing(query)
         loading.value = true
         client.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful) {
-                    userFollowers.value = response.body()
+                    userFollowing.value = response.body()
                     loading.value = false
                 }
             }

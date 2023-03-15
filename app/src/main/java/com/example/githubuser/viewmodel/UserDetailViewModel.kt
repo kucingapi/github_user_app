@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseDetailUser
-import com.example.githubuser.api.ResponseFollow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,9 +12,6 @@ import retrofit2.Response
 class UserDetailViewModel: ViewModel() {
     val userDetail: MutableLiveData<ResponseDetailUser> by lazy {
         MutableLiveData<ResponseDetailUser>()
-    }
-    val userFollowing: MutableLiveData<List<ResponseFollow>> by lazy {
-        MutableLiveData<List<ResponseFollow>>()
     }
     val loading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
