@@ -14,9 +14,6 @@ class UserDetailViewModel: ViewModel() {
     val userDetail: MutableLiveData<ResponseDetailUser> by lazy {
         MutableLiveData<ResponseDetailUser>()
     }
-    val userFollowers: MutableLiveData<ResponseDetailUser> by lazy {
-        MutableLiveData<ResponseDetailUser>()
-    }
     val userFollowing: MutableLiveData<List<ResponseFollow>> by lazy {
         MutableLiveData<List<ResponseFollow>>()
     }
@@ -37,25 +34,6 @@ class UserDetailViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseDetailUser>, t: Throwable) {
-                Log.d("response", "failed")
-                loading.value = false
-            }
-        })
-    }
-
-    fun getFollowers(username: String){
-        val query = username.ifEmpty { "kucingapi" }
-        val client = apiService.getFollowers(query)
-        loading.value = true
-        client.enqueue(object : Callback<ResponseFollow> {
-            override fun onResponse(call: Call<ResponseFollow>, response: Response<ResponseFollow>) {
-                if (response.isSuccessful) {
-                    userFollowing.value = response.body()?.follow as List<ResponseFollow>
-                    loading.value = false
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseFollow>, t: Throwable) {
                 Log.d("response", "failed")
                 loading.value = false
             }

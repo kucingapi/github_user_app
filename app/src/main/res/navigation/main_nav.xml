@@ -23,5 +23,8 @@
             android:name="username"
             app:argType="string"
             android:defaultValue="kucingapi" />
+        <action
+            android:id="@+id/action_userDetailFragment_self"
+            app:destination="@id/userDetailFragment" />
     </fragment>
 </navigation>

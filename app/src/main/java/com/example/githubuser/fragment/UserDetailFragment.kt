@@ -27,8 +27,9 @@ class UserDetailFragment : Fragment() {
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_followers,
-            R.string.tab_followers
+            R.string.tab_following
         )
+        const val ARG_USERNAME = "username_argument"
     }
 
     override fun onCreateView(
@@ -74,7 +75,7 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun setTabLayout() {
-        val sectionsPagerAdapter = FollowViewPagerAdapter(requireActivity())
+        val sectionsPagerAdapter = FollowViewPagerAdapter(requireActivity(), usernameText)
         val viewPager: ViewPager2 = binding.viewPagerFollow
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabFollow

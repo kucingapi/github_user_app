@@ -25,13 +25,14 @@ class UsersViewModel: ViewModel() {
         client.enqueue(object : Callback<ResponseUsers> {
             override fun onResponse(call: Call<ResponseUsers>, response: Response<ResponseUsers>) {
                 if (response.isSuccessful) {
+                    Log.d("response", "failed")
                     listUser.value = response.body()?.users as List<User>
                     loading.value = false
                 }
             }
 
             override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
-                Log.d("response", "failed")
+                Log.d("response", "${t.message}")
                 loading.value = false
             }
         })
