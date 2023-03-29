@@ -20,12 +20,16 @@ class FollowViewPagerAdapter(activity: FragmentActivity, username: String) : Fra
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         val followersFragment = FollowersFragment()
+        val followingFragment = FollowingFragment()
         followersFragment.arguments = Bundle().apply {
+            putString(UserDetailFragment.ARG_USERNAME, username)
+        }
+        followingFragment.arguments = Bundle().apply {
             putString(UserDetailFragment.ARG_USERNAME, username)
         }
         when (position) {
             0 -> fragment = followersFragment
-            1 -> fragment = FollowingFragment()
+            1 -> fragment = followingFragment
         }
         return fragment as Fragment
     }

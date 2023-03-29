@@ -71,7 +71,7 @@ class UserListFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
-        listUserAdapter = UsersAdapter(dataSet)
+        listUserAdapter = UsersAdapter(dataSet, UserListDestination.DETAIL)
         recyclerView.adapter = listUserAdapter
     }
 

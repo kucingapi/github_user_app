@@ -37,7 +37,7 @@ class FollowingFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
-        listUserAdapter = UsersAdapter(dataSet)
+        listUserAdapter = UsersAdapter(dataSet, UserListDestination.SELF)
         recyclerView.adapter = listUserAdapter
     }
 
