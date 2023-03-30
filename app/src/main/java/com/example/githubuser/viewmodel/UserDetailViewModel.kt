@@ -13,6 +13,7 @@ class UserDetailViewModel: ViewModel() {
     val userDetail: MutableLiveData<ResponseDetailUser> by lazy {
         MutableLiveData<ResponseDetailUser>()
     }
+
     val loading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
     }

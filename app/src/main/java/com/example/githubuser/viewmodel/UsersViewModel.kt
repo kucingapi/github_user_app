@@ -1,21 +1,29 @@
 package com.example.githubuser.viewmodel
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.api.User
+import com.example.githubuser.repository.DataStoreRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UsersViewModel: ViewModel() {
+class UsersViewModel(application: Application, private val repository: DataStoreRepository): AndroidViewModel(application) {
     private val listUser = MutableLiveData<List<User>>()
     val _listUser: LiveData<List<User>> = listUser
     val loading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
+    }
+
+    val readFromDataStore = repository.readFromDataStore.asLiveData()
+
+    fun saveToDataStore(nightMode: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveToDataStore(nightMode)
     }
 
     fun getUsers(username: String){
@@ -36,5 +44,15 @@ class UsersViewModel: ViewModel() {
                 loading.value = false
             }
         })
+    }
+}
+
+class UsersViewModelFactory(private val application: Application, private val repository: DataStoreRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(UsersViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return UsersViewModel(application, repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

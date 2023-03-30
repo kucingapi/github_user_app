@@ -44,7 +44,6 @@ class UserDetailFragment : Fragment() {
         return binding.root
     }
 
-
     private fun getBundleData(){
         usernameText = UserDetailFragmentArgs.fromBundle(arguments as Bundle).username
     }

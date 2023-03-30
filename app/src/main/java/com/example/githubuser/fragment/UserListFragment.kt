@@ -4,10 +4,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.R
@@ -15,34 +16,42 @@ import com.example.githubuser.viewmodel.UsersViewModel
 import com.example.githubuser.adapter.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
+import com.example.githubuser.repository.DataStoreRepository
+import com.example.githubuser.viewmodel.UsersViewModelFactory
 
 class UserListFragment : Fragment() {
 
     private lateinit var binding: FragmentUserListBinding
     private lateinit var recyclerView: RecyclerView
     private val dataSet = arrayListOf<User>()
-    private val usersViewModel: UsersViewModel by viewModels()
+    private lateinit var usersViewModel: UsersViewModel
     private lateinit var listUserAdapter: UsersAdapter
+    private lateinit var menu: Menu
     private lateinit var searchView: SearchView
+    private var nightMode: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserListBinding.inflate(inflater, container, false)
+        val dataStoreRepository = DataStoreRepository.getInstance(requireContext())
+        usersViewModel = ViewModelProvider(this, UsersViewModelFactory(requireActivity().application, dataStoreRepository)).get(UsersViewModel::class.java)
         setToolBar()
         setupRecyclerView()
         setUserObserver()
+        setDataStoreObserver()
         return binding.root
     }
 
     private fun setToolBar(){
         val searchToolbar = binding.searchToolbar
         searchToolbar.inflateMenu(R.menu.option_menu)
-        setupSearchView(searchToolbar.menu)
+        menu = searchToolbar.menu
+        setupSearchView()
     }
 
-    private fun setupSearchView(menu: Menu){
+    private fun setupSearchView(){
         val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.search).actionView as SearchView
 
@@ -83,5 +92,24 @@ class UserListFragment : Fragment() {
             binding.progressBar.isVisible = it
         }
         usersViewModel.getUsers("")
+    }
+
+    private fun setDataStoreObserver() {
+        val themeToggle = menu.findItem(R.id.setting)
+        themeToggle.setOnMenuItemClickListener {
+            usersViewModel.saveToDataStore(!nightMode)
+            true
+        }
+        usersViewModel.readFromDataStore.observe(viewLifecycleOwner) {
+            nightMode = it
+            if(nightMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                themeToggle.setIcon(R.drawable.ic_baseline_mode_night_24)
+            }
+            else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                themeToggle.setIcon(R.drawable.ic_baseline_light_mode_24)
+            }
+        }
     }
 }
