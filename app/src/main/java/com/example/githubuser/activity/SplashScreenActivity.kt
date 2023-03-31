@@ -9,7 +9,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.WindowManager
-import com.example.githubuser.R
 import com.example.githubuser.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
@@ -25,6 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
         changeActivity()
     }
 
+    @SuppressLint("AppCompatMethod")
     private fun closeActionBar(){
         if (Build.VERSION.SDK_INT < 16) {
             window.setFlags(

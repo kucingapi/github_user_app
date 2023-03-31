@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_userListFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment" />
+        <action
+            android:id="@+id/action_userListFragment_to_favoriteUserFragment"
+            app:destination="@id/favoriteUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/userDetailFragment"
@@ -25,6 +28,15 @@
             android:defaultValue="kucingapi" />
         <action
             android:id="@+id/action_userDetailFragment_self"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteUserFragment"
+        android:name="com.example.githubuser.fragment.FavoriteUserFragment"
+        android:label="fragment_favorite_user"
+        tools:layout="@layout/fragment_favorite_user" >
+        <action
+            android:id="@+id/action_favoriteUserFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment" />
     </fragment>
 </navigation>

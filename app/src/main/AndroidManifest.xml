@@ -13,6 +13,7 @@
         android:theme="@style/Theme.GithubUser">
         <activity
             android:name=".activity.SplashScreenActivity"
+            android:launchMode="singleInstance"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

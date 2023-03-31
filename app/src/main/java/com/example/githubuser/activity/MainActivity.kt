@@ -2,6 +2,7 @@ package com.example.githubuser.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.githubuser.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
