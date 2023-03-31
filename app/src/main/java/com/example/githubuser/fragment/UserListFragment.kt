@@ -17,6 +17,7 @@ import com.example.githubuser.adapter.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
 import com.example.githubuser.repository.DataStoreRepository
+import com.example.githubuser.repository.UserFavoriteRepository
 import com.example.githubuser.viewmodel.UsersViewModelFactory
 
 class UserListFragment : Fragment() {
@@ -36,7 +37,7 @@ class UserListFragment : Fragment() {
     ): View {
         binding = FragmentUserListBinding.inflate(inflater, container, false)
         val dataStoreRepository = DataStoreRepository.getInstance(requireContext())
-        usersViewModel = ViewModelProvider(this, UsersViewModelFactory(requireActivity().application, dataStoreRepository)).get(UsersViewModel::class.java)
+        usersViewModel = ViewModelProvider(this, UsersViewModelFactory(requireActivity().application, dataStoreRepository))[UsersViewModel::class.java]
         setToolBar()
         setupRecyclerView()
         setUserObserver()

@@ -6,7 +6,9 @@ import androidx.lifecycle.*
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.api.User
+import com.example.githubuser.data.local.entity.FavoriteUser
 import com.example.githubuser.repository.DataStoreRepository
+import com.example.githubuser.repository.UserFavoriteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -21,6 +23,7 @@ class UsersViewModel(application: Application, private val repository: DataStore
     }
 
     val readFromDataStore = repository.readFromDataStore.asLiveData()
+
 
     fun saveToDataStore(nightMode: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         repository.saveToDataStore(nightMode)
