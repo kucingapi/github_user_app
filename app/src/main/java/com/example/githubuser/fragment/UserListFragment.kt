@@ -3,13 +3,13 @@ package com.example.githubuser.fragment
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.R
@@ -18,7 +18,6 @@ import com.example.githubuser.adapter.UsersAdapter
 import com.example.githubuser.api.User
 import com.example.githubuser.databinding.FragmentUserListBinding
 import com.example.githubuser.repository.DataStoreRepository
-import com.example.githubuser.repository.UserFavoriteRepository
 import com.example.githubuser.viewmodel.UsersViewModelFactory
 
 class UserListFragment : Fragment() {
@@ -43,6 +42,7 @@ class UserListFragment : Fragment() {
         setupRecyclerView()
         setUserObserver()
         setDataStoreObserver()
+        setNavigation()
         return binding.root
     }
 
@@ -112,6 +112,15 @@ class UserListFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 themeToggle.setIcon(R.drawable.ic_baseline_light_mode_24)
             }
+        }
+    }
+
+    private fun setNavigation() {
+        val favoriteIcon = menu.findItem(R.id.favorite)
+        favoriteIcon.setOnMenuItemClickListener {
+            val destination = UserListFragmentDirections.actionUserListFragmentToFavoriteUserFragment()
+            findNavController().navigate(destination)
+            true
         }
     }
 }
