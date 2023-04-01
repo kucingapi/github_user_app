@@ -5,7 +5,7 @@ import android.util.Log
 import com.example.githubuser.data.local.entity.FavoriteUser
 import com.example.githubuser.data.local.room.UserRoom
 
-class UserFavoriteRepository(private val context: Context){
+class UserFavoriteRepository(context: Context){
     private val userDao = UserRoom.getInstance(context).userDao()
 
     fun getAllFavoriteUser() = userDao.getAllUser()

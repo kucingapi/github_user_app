@@ -24,7 +24,7 @@ class FollowersFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFollowersBinding.inflate(inflater, container, false)
         setupRecyclerView()
         setFollowersData()

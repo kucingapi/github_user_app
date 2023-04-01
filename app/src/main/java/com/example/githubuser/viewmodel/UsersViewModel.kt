@@ -6,9 +6,7 @@ import androidx.lifecycle.*
 import com.example.githubuser.api.ApiConfig.apiService
 import com.example.githubuser.api.ResponseUsers
 import com.example.githubuser.api.User
-import com.example.githubuser.data.local.entity.FavoriteUser
 import com.example.githubuser.repository.DataStoreRepository
-import com.example.githubuser.repository.UserFavoriteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -30,7 +28,7 @@ class UsersViewModel(application: Application, private val repository: DataStore
     }
 
     fun getUsers(username: String){
-        val query = if(username.isEmpty()) "kucingapi" else username
+        val query = username.ifEmpty { "kucingapi" }
         val client = apiService.getListUsers(query)
         loading.value = true
         client.enqueue(object : Callback<ResponseUsers> {

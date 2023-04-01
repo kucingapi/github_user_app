@@ -95,7 +95,7 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun setFavoriteButton() {
-        favoriteButton = binding.fabFavorite as FloatingActionButton
+        favoriteButton = binding.fabFavorite
         userDetailViewModel.isUserFavorite(usernameText)
         userDetailViewModel.isFavorite.observe(viewLifecycleOwner) {
             val red200 = ContextCompat.getColor(requireContext(), R.color.red_200)

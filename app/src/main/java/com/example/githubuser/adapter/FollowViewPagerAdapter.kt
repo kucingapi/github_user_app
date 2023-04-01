@@ -9,7 +9,7 @@ import com.example.githubuser.fragment.FollowingFragment
 import com.example.githubuser.fragment.UserDetailFragment
 
 class FollowViewPagerAdapter(activity: FragmentActivity, username: String) : FragmentStateAdapter(activity) {
-    private lateinit var username: String
+    private var username: String
     override fun getItemCount(): Int {
         return 2
     }
