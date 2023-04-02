@@ -63,19 +63,21 @@ class UserDetailFragment : Fragment() {
 
     private fun setUserDetailObserver() {
         userDetailViewModel.userDetail.observe(viewLifecycleOwner) {
-            setUserDetail(it.avatarUrl, it.followers, it.following)
+
+            setUserDetail(it.avatarUrl, it.followers, it.following, it.name)
         }
         userDetailViewModel.loading.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
         }
     }
 
-    private fun setUserDetail(profileUrl: String?, followers: Int?, following: Int?){
+    private fun setUserDetail(profileUrl: String?, followers: Int?, following: Int?, nameInput: String?){
         if (profileUrl != null) {
             this.profileUrl = profileUrl
         }
         with(binding){
             username.text = usernameText
+            name.text = nameInput ?: ""
             followingCount.text = following.toString()
             followersCount.text = followers.toString()
             Glide.with(requireContext())
